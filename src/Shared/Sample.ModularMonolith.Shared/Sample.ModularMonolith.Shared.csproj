@@ -1,0 +1,16 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+		<PackageReference Include="Microsoft.Extensions.Hosting" Version="7.0.1" />
+		<PackageReference Include="Hangfire.AspNetCore" Version="1.8.2" />
+		<PackageReference Include="Hangfire.Console" Version="1.4.2" />
+		<PackageReference Include="Hangfire.Dashboard.BasicAuthorization" Version="1.0.2" />
+		<PackageReference Include="Hangfire.Heartbeat" Version="0.5.1" />
+
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Communications\Samples.ModularMonolith.Communications.Abstractions\Samples.ModularMonolith.Communications.Abstractions.csproj" />
+	  <ProjectReference Include="..\..\Communications\Samples.ModularMonolith.Communications.Clients\Samples.ModularMonolith.Communications.Clients.csproj" />
+	  <ProjectReference Include="..\Samples.ModularMonolith.Infrastructure.Presentation\Samples.ModularMonolith.Infrastructure.Presentation.csproj" />
+	</ItemGroup>
+</Project>

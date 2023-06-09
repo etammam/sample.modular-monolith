@@ -1,0 +1,46 @@
+{
+    "$schema": "https://raw.githubusercontent.com/DotNetAnalyzers/StyleCopAnalyzers/master/StyleCop.Analyzers/StyleCop.Analyzers/Settings/stylecop.schema.json",
+    "settings": {
+        "indentation": {
+            "indentationSize": 4,
+            "tabSize": 4,
+            "useTabs": false
+        },
+        "readabilityRules": {
+            "allowBuiltInTypeAliases": false
+        },
+        "orderingRules": {
+            "elementOrder": [ "kind", "accessibility", "constant", "static", "readonly" ],
+            "systemUsingDirectivesFirst": true,
+            "usingDirectivesPlacement": "outsideNamespace",
+            "blankLinesBetweenUsingGroups": "allow"
+        },
+        "namingRules": {
+            "allowedNamespaceComponents": [],
+            "includeInferredTupleElementNames": false,
+            "tupleElementNameCasing": "PascalCase"
+        },
+        "maintainabilityRules": {
+            "topLevelTypes": [ "class" ]
+        },
+        "layoutRules": {
+            "newlineAtEndOfFile": "require",
+            "allowConsecutiveUsings": true
+        },
+        "documentationRules": {
+            "companyName": "Digital Core",
+            "copyrightText": "Copyright (c) {companyName}. All rights reserved.",
+            "xmlHeader": true,
+            "variables": {
+            },
+            "documentInterfaces": true,
+            "documentExposedElements": false,
+            "documentInternalElements": false,
+            "documentPrivateElements": false,
+            "documentPrivateFields": false,
+            "documentationCulture": "en-US",
+            "fileNamingConvention": "metadata",
+            "excludeFromPunctuationCheck": [ "seealso" ]
+        }
+    }
+}
