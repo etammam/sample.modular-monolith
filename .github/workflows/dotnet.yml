@@ -29,12 +29,13 @@ jobs:
         run: dotnet restore
 
       - name: Install GitVersion.CommandLine
-        run: dotnet tool install --global GitVersion.Tool --version 5.12.0
+        run: dotnet tool install --global GitVersion.CommandLine
 
       - name: Get GitVersion information
         id: gitversion
         run: |
-          gitversion /output json > gitversion.json
+          gitversion_path=$(dotnet tool run gitversion --tool-path .)
+          ${gitversion_path}/gitversion /output json > gitversion.json
           version=$(jq -r '.FullSemVer' gitversion.json)
           echo "::set-output name=version::${version}"
 
