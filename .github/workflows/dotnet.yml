@@ -30,8 +30,6 @@ jobs:
 
       - name: Install GitVersion
         uses: gittools/actions/gitversion/setup@v0.9.6
-        with:
-          version: 'latest'  # Use 'latest' to install the latest version of GitVersion
 
       - name: Get GitVersion information
         id: gitversion
