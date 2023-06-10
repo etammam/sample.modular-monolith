@@ -52,7 +52,7 @@ jobs:
           echo "::set-output name=path::${bootstrapper_path}"
 
       - name: Publish
-        run: dotnet publish --configuration Release --no-build --output ./publish ${{ steps.find-bootstrapper.outputs.path }} /p:Version=${{ steps.gitversion.outputs.version }}
+        run: dotnet publish --configuration Release --no-build --output ./publish ${{ steps.find-bootstrapper.outputs.path }} /p:Version=${{ steps.gitversion.outputs.version }} /p:AssemblyVersion=${{ steps.gitversion.outputs.version }}
 
       - name: Create source code zip
         run: zip -r sample.modularmonolith.source-code.zip .
