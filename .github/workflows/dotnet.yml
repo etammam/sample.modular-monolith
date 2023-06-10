@@ -25,12 +25,18 @@ jobs:
           path: ~/.nuget/packages
           key: nuget-packages-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
 
-      - name: Install GitVersion.Tool
-        run: dotnet tool install --global GitVersion.Tool
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Install GitVersion.CommandLine
+        run: dotnet tool install --global GitVersion.CommandLine --version 5.7.0
 
       - name: Get GitVersion information
         id: gitversion
-        run: echo ::set-output name=version::$(gitversion /output json)
+        run: |
+          gitversion /output json > gitversion.json
+          version=$(jq -r '.FullSemVer' gitversion.json)
+          echo "::set-output name=version::${version}"
 
       - name: Set Application Version
         run: echo "##vso[build.updatebuildnumber]${{ steps.gitversion.outputs.version }}"
@@ -41,8 +47,14 @@ jobs:
       - name: Test
         run: dotnet test --configuration Release --no-build --verbosity normal --logger "trx;LogFileName=test_results.trx"
 
+      - name: Find Bootstrapper Project
+        id: find-bootstrapper
+        run: |
+          bootstrapper_path=$(find . -path './src/Presentations/**/*BootstrapperApi.csproj' -type f -print -quit)
+          echo "::set-output name=path::${bootstrapper_path}"
+
       - name: Publish
-        run: dotnet publish --configuration Release --no-build --output ./publish src/Presentations/Samples.ModularMonolith.Presentation.BootstrapperApi.csproj /p:Version=${{ steps.gitversion.outputs.version }}
+        run: dotnet publish --configuration Release --no-build --output ./publish ${{ steps.find-bootstrapper.outputs.path }} /p:Version=${{ steps.gitversion.outputs.version }}
 
       - name: Create source code zip
         run: zip -r sample.modularmonolith.source-code.zip .
