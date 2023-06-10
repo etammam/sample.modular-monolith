@@ -42,7 +42,7 @@ jobs:
         run: dotnet test --configuration Release --no-build --verbosity normal --logger "trx;LogFileName=test_results.trx"
 
       - name: Publish
-        run: dotnet publish --configuration Release --no-build --output ./publish Samples.ModularMonolith.Presentation.BootstrapperApi.csproj /p:Version=${{ steps.gitversion.outputs.version }}
+        run: dotnet publish --configuration Release --no-build --output ./publish src/Presentations/Samples.ModularMonolith.Presentation.BootstrapperApi.csproj /p:Version=${{ steps.gitversion.outputs.version }}
 
       - name: Create source code zip
         run: zip -r sample.modularmonolith.source-code.zip .
