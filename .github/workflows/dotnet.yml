@@ -29,7 +29,7 @@ jobs:
         run: dotnet restore
 
       - name: Install GitVersion.CommandLine
-        run: dotnet tool install --global GitVersion.CommandLine --version 5.7.0
+        run: dotnet tool install --global GitVersion.CommandLine
 
       - name: Get GitVersion information
         id: gitversion
