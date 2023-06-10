@@ -25,10 +25,10 @@ jobs:
           path: ~/.nuget/packages
           key: nuget-packages-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
 
-      - name: Setup GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.6
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9
         with:
-          includePrerelease: false
+            versionSpec: '5.1.x'
 
       - name: Get GitVersion information
         id: gitversion
