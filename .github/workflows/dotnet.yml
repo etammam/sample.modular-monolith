@@ -75,23 +75,22 @@ jobs:
           name: test-report
           path: junit-report.xml
 
-      - name: Publish Package as Source Code Zip
-        uses: actions/upload-artifact@v2
-        with:
-          name: package-source-code
-          path: ./publish
-
-      - name: Create Release
-        uses: actions/create-release@v1
+      - name: Upload Release Assets
+        uses: actions/upload-release-asset@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag_name: ${{ github.sha }}
-          release_name: Release ${{ github.sha }}
-          draft: ${{ github.ref == 'refs/heads/main' }}
-          prerelease: ${{ github.ref == 'refs/heads/dev' }}
-          files:
-            - name: Package
-              path: ./publish
-            - name: Test Report
-              path: junit-report.xml
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./publish/sample.modularmonolith.source-code.zip
+          asset_name: sample.modularmonolith.source-code.zip
+          asset_content_type: application/zip
+
+      - name: Upload Test Report as Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: junit-report.xml
+          asset_name: junit-report.xml
+          asset_content_type: application/xml
