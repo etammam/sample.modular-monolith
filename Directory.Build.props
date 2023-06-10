@@ -1,7 +1,7 @@
 ﻿<Project>
     <PropertyGroup>
         <Title>Samples - Modular Monolith</Title>
-        <Authors>Eslam M. Tammam</Authors>
+        <Authors>Eslam Mustafa Tammam</Authors>
         <Description>a backend modular monolith sample with actor module communication.</Description>
         <RepositoryType>git</RepositoryType>
         <TargetFramework>net7.0</TargetFramework>

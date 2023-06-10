@@ -1,21 +1,49 @@
-name: .NET
+name: Build, Test, and Publish
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+
 jobs:
-  build:
+  build-test-publish:
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 7.0.x
-    - name: Restore dependencies
-      run: dotnet restore
-    - name: Build
-      run: dotnet build --no-restore
-    - name: Test
-      run: dotnet test --no-build --verbosity normal
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: '7.0.x'  # Replace with the desired .NET Core version
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v2
+        with:
+          path: ~/.nuget/packages
+          key: nuget-packages-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
+
+      - name: Restore dependencies
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release
+
+      - name: Test
+        run: dotnet test --configuration Release --no-build --verbosity normal --logger "trx;LogFileName=test_results.trx"
+
+      - name: Publish
+        run: dotnet publish --configuration Release --no-build --output ./publish
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: published-files
+          path: ./publish
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-results
+          path: ./TestResults
