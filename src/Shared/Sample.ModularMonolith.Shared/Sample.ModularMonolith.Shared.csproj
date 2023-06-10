@@ -11,6 +11,9 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\Communications\Samples.ModularMonolith.Communications.Abstractions\Samples.ModularMonolith.Communications.Abstractions.csproj" />
 	  <ProjectReference Include="..\..\Communications\Samples.ModularMonolith.Communications.Clients\Samples.ModularMonolith.Communications.Clients.csproj" />
+	  <ProjectReference Include="..\Samples.ModularMonolith.Infrastructure.Events.Domain\Samples.ModularMonolith.Infrastructure.Events.Domain.csproj" />
+	  <ProjectReference Include="..\Samples.ModularMonolith.Infrastructure.Events.Integrations\Samples.ModularMonolith.Infrastructure.Events.Integrations.csproj" />
+	  <ProjectReference Include="..\Samples.ModularMonolith.Infrastructure.Persistence\Samples.ModularMonolith.Infrastructure.Persistence.csproj" />
 	  <ProjectReference Include="..\Samples.ModularMonolith.Infrastructure.Presentation\Samples.ModularMonolith.Infrastructure.Presentation.csproj" />
 	</ItemGroup>
 </Project>

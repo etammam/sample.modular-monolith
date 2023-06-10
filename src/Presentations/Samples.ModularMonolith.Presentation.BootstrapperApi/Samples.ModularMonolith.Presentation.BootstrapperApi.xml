@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Samples.ModularMonolith.Presentation.BootstrapperApi</name>
+    </assembly>
+    <members>
+        <member name="T:Samples.ModularMonolith.Presentation.BootstrapperApi.Controllers.FooController">
+            <summary>
+            an empty controller to present the status of application.
+            </summary>
+        </member>
+        <member name="M:Samples.ModularMonolith.Presentation.BootstrapperApi.Controllers.FooController.Foo">
+            <summary>
+            mario knocking...
+            </summary>
+            <returns>system reaction.</returns>
+        </member>
+        <member name="T:Samples.ModularMonolith.Presentation.BootstrapperApi.Program">
+            <summary>
+            the entry point of bootstrapper application
+            </summary>
+        </member>
+        <member name="M:Samples.ModularMonolith.Presentation.BootstrapperApi.Program.Main(System.String[])">
+            <summary>
+            the main function of application.
+            </summary>
+            <param name="args"></param>
+        </member>
+    </members>
+</doc>

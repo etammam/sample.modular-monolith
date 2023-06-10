@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Samples.ModularMonolith.Infrastructure.Events.Integrations
 {
-    internal class IntegrationEventHookerInterceptor : SaveChangesInterceptor
+    public class IntegrationEventHookerInterceptor : SaveChangesInterceptor
     {
         private readonly IPublisher _publisherService;
 

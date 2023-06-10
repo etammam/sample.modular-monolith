@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Samples.ModularMonolith.Infrastructure.Persistence.Interceptors
 {
-    internal class AuditInterceptor : SaveChangesInterceptor
+    public class AuditInterceptor : SaveChangesInterceptor
     {
         private readonly ICurrentUserService _currentUserService;
         private readonly IClockService _clockService;

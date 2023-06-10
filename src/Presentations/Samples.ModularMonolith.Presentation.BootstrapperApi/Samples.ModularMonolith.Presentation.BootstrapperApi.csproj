@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Sample.ModularMonolith.Shared\Sample.ModularMonolith.Shared.csproj" />
+  </ItemGroup>
+</Project>

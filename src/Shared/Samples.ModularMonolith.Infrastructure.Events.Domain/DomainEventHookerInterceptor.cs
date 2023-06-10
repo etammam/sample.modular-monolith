@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Samples.ModularMonolith.Infrastructure.Events.Domain
 {
-    internal class DomainEventHookerInterceptor : SaveChangesInterceptor
+    public class DomainEventHookerInterceptor : SaveChangesInterceptor
     {
         private readonly IPublisher _publisherService;
 

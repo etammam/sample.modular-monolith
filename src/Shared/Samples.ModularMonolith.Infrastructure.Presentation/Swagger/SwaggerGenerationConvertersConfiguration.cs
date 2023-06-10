@@ -1,15 +1,15 @@
-﻿using System;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Any;
 using Microsoft.OpenApi.Models;
 using Samples.ModularMonolith.Domain.Shared.Primitives;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System;
 
-namespace Samples.ModularMonolith.Infrastructure.Presentation;
+namespace Samples.ModularMonolith.Infrastructure.Presentation.Swagger;
 
-public static class SwaggerGenerationConvertersConfiguration
+internal static class SwaggerGenerationConvertersConfiguration
 {
-    public static void MapIds(this SwaggerGenOptions swaggerGenOptions)
+    internal static void MapIds(this SwaggerGenOptions swaggerGenOptions)
     {
         swaggerGenOptions.MapType(typeof(CustomerId), () => new OpenApiSchema
         {

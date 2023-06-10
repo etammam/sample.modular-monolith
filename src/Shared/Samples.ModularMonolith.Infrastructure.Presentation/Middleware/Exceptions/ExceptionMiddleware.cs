@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Samples.ModularMonolith.Domain.Shared.Exceptions;
 using Samples.ModularMonolith.Domain.Shared.Exceptions.Models;
 using Samples.ModularMonolith.Infrastructure.Presentation.Configurations;
@@ -24,12 +25,12 @@ namespace Samples.ModularMonolith.Infrastructure.Presentation.Middleware.Excepti
         private readonly IHostEnvironment _hostEnvironment;
         private readonly ILogger<ExceptionMiddleware> _logger;
 
-        public ExceptionMiddleware(ExceptionConfiguration exceptionConfiguration, IHostEnvironment hostEnvironment, ILogger<ExceptionMiddleware> logger)
+        public ExceptionMiddleware(IOptions<ExceptionConfiguration> exceptionConfiguration, IHostEnvironment hostEnvironment, ILogger<ExceptionMiddleware> logger)
         {
             if (exceptionConfiguration is not { })
                 throw new ArgumentNullException(nameof(exceptionConfiguration));
 
-            _exceptionConfiguration = exceptionConfiguration;
+            _exceptionConfiguration = exceptionConfiguration.Value;
             _hostEnvironment = hostEnvironment;
             _logger = logger;
         }
