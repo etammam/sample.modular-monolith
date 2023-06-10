@@ -25,17 +25,15 @@ jobs:
           path: ~/.nuget/packages
           key: nuget-packages-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
 
-      - name: Restore dependencies
-        run: dotnet restore
-
-      - name: Install GitVersion.CommandLine
-        run: dotnet tool install --global GitVersion.Tool --version 5.12.0
+      - name: Setup GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.6
+        with:
+          includePrerelease: false
 
       - name: Get GitVersion information
         id: gitversion
         run: |
-          npx --no-install gitversion /output json > gitversion.json
-          version=$(jq -r '.FullSemVer' gitversion.json)
+          version=$(gitversion /output json | jq -r '.FullSemVer')
           echo "::set-output name=version::${version}"
 
       - name: Set Application Version
@@ -60,13 +58,40 @@ jobs:
         run: zip -r sample.modularmonolith.source-code.zip .
 
       - name: Publish source code zip
+        uses: actions/upload-artifact@v2
+        with:
+          name: source-code
+          path: sample.modularmonolith.source-code.zip
+
+      - name: Generate Test Report
+        uses: mikepenz/action-junit-report@v2
+        with:
+          report_paths: '**/test_results.trx'
+          output_file: junit-report.xml
+          
+      - name: Publish Test Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: test-report
+          path: junit-report.xml
+
+      - name: Publish Package as Source Code Zip
+        uses: actions/upload-artifact@v2
+        with:
+          name: package-source-code
+          path: ./publish
+
+      - name: Create Release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: ${{ github.sha }}
           release_name: Release ${{ github.sha }}
-          files: |
-            ./sample.modularmonolith.source-code.zip
           draft: ${{ github.ref == 'refs/heads/main' }}
           prerelease: ${{ github.ref == 'refs/heads/dev' }}
+          files:
+            - name: Package
+              path: ./publish
+            - name: Test Report
+              path: junit-report.xml
