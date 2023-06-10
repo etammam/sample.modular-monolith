@@ -1,20 +1,22 @@
 ﻿<Project>
-    <PropertyGroup>
-        <Title>Samples - Modular Monolith</Title>
-        <Authors>Eslam Mustafa Tammam</Authors>
-        <Description>a backend modular monolith sample with actor module communication.</Description>
-        <RepositoryType>git</RepositoryType>
-        <TargetFramework>net7.0</TargetFramework>
-        <ImplicitUsings>disable</ImplicitUsings>
-        <Nullable>disable</Nullable>
-        <CodeAnalysisRuleSet>$(MSBuildThisFileDirectory).ruleset</CodeAnalysisRuleSet>
-        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
-    </PropertyGroup>
+	<PropertyGroup>
+		<Title>Samples - Modular Monolith</Title>
+		<Authors>Eslam Mustafa Tammam</Authors>
+		<Description>a backend modular monolith sample with actor module communication.</Description>
+		<RepositoryType>git</RepositoryType>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<CodeAnalysisRuleSet>$(MSBuildThisFileDirectory).ruleset</CodeAnalysisRuleSet>
+		<EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+		<Version>1.0.0</Version>
+		<!-- Set a default version here -->
+	</PropertyGroup>
 
-    <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Api'))">
-        <GenerateDocumentationFile>true</GenerateDocumentationFile>
-        <DocumentationFile>$(MSBuildProjectName).xml</DocumentationFile>
-    </PropertyGroup>
+	<PropertyGroup Condition="$(MSBuildProjectName.EndsWith('Api'))">
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<DocumentationFile>$(MSBuildProjectName).xml</DocumentationFile>
+	</PropertyGroup>
 
 	<ItemGroup Condition="$(MSBuildProjectName.EndsWith('Api'))">
 		<None Update="$(MSBuildProjectName.EndsWith('Api')).xml">
@@ -22,11 +24,22 @@
 		</None>
 	</ItemGroup>
 
-    <ItemGroup>
-        <AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" />
-        <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
-    </ItemGroup>
+	<ItemGroup>
+		<AdditionalFiles Include="$(MSBuildThisFileDirectory)stylecop.json" />
+		<PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+	<!-- GitVersion Configuration -->
+	<PropertyGroup>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<VersionPrefix>1.0</VersionPrefix>
+		<VersionSuffix>$(GitVersion_NuGetVersionSuffix)</VersionSuffix>
+	</PropertyGroup>
+
+	<!-- Import GitVersion.targets -->
+	<Import Project="$(MSBuildThisFileDirectory)..\..\..\..\build\GitVersion.targets" Condition="Exists('$(MSBuildThisFileDirectory)..\..\..\..\build\GitVersion.targets')" />
 </Project>
