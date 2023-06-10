@@ -52,7 +52,16 @@ jobs:
           echo "::set-output name=path::${bootstrapper_path}"
 
       - name: Publish
-        run: dotnet publish --configuration Release --no-build --output ./publish ${{ steps.find-bootstrapper.outputs.path }} /p:Version=${{ steps.gitversion.outputs.version }} /p:AssemblyVersion=${{ steps.gitversion.outputs.version }}
+        run: |
+          dotnet tool install --global GitVersion.Tool --version 5.7.0
+          dotnet tool run gitversion /output json > gitversion.json
+          version=$(jq -r '.FullSemVer' gitversion.json)
+          echo "Setting version to: $version"
+          sed -i "s/<Version>.*<\/Version>/<Version>$version<\/Version>/" ./src/Presentations/Samples.ModularMonolith.Presentation.BootstrapperApi/Samples.ModularMonolith.Presentation.BootstrapperApi.csproj
+          dotnet publish --configuration Release --no-build --output ./publish ./src/Presentations/Samples.ModularMonolith.Presentation.BootstrapperApi/Samples.ModularMonolith.Presentation.BootstrapperApi.csproj
+        shell: bash
+        env:
+          DOTNET_ROOT: /home/runner/.dotnet
 
       - name: Create source code zip
         run: zip -r sample.modularmonolith.source-code.zip .
