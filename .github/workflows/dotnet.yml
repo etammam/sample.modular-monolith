@@ -1,9 +1,10 @@
 name: Build, Test, and Publish
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
+      - dev
+      - feature/*
 
 jobs:
   build-test-publish:
@@ -27,6 +28,16 @@ jobs:
       - name: Restore dependencies
         run: dotnet restore
 
+      - name: Install GitVersion
+        uses: gittools/actions/gitversion/setup@v0.9.6
+
+      - name: Get GitVersion information
+        id: gitversion
+        run: echo ::set-output name=version::$(GitVersion /output json)
+
+      - name: Set Application Version
+        run: echo "##vso[build.updatebuildnumber]${{ steps.gitversion.outputs.version }}"
+
       - name: Build
         run: dotnet build --configuration Release
 
@@ -34,16 +45,19 @@ jobs:
         run: dotnet test --configuration Release --no-build --verbosity normal --logger "trx;LogFileName=test_results.trx"
 
       - name: Publish
-        run: dotnet publish --configuration Release --no-build --output ./publish
+        run: dotnet publish --configuration Release --no-build --output ./publish Samples.ModularMonolith.Presentation.BootstrapperApi.csproj /p:Version=${{ steps.gitversion.outputs.version }}
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: published-files
-          path: ./publish
+      - name: Create source code zip
+        run: zip -r sample.modularmonolith.source-code.zip .
 
-      - name: Upload test results
-        uses: actions/upload-artifact@v2
+      - name: Publish source code zip
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          name: test-results
-          path: ./TestResults
+          tag_name: ${{ github.sha }}
+          release_name: Release ${{ github.sha }}
+          files: |
+            ./sample.modularmonolith.source-code.zip
+          draft: ${{ github.ref == 'refs/heads/main' }}
+          prerelease: ${{ github.ref == 'refs/heads/dev' }}
