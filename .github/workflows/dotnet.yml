@@ -25,15 +25,12 @@ jobs:
           path: ~/.nuget/packages
           key: nuget-packages-${{ runner.os }}-${{ hashFiles('**/*.csproj') }}
 
-      - name: Restore dependencies
-        run: dotnet restore
-
-      - name: Install GitVersion
-        uses: gittools/actions/gitversion/setup@v0.9.6
+      - name: Install GitVersion.Tool
+        run: dotnet tool install --global GitVersion.Tool
 
       - name: Get GitVersion information
         id: gitversion
-        run: echo ::set-output name=version::$(GitVersion /output json)
+        run: echo ::set-output name=version::$(gitversion /output json)
 
       - name: Set Application Version
         run: echo "##vso[build.updatebuildnumber]${{ steps.gitversion.outputs.version }}"
