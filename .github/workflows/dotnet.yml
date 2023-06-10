@@ -28,6 +28,7 @@ jobs:
             ${{ runner.os }}-nuget-
 
   test:
+    needs: [build]
     runs-on: ubuntu-latest
 
     steps:
@@ -60,6 +61,8 @@ jobs:
 
       - name: Install GitVersion Action
         uses: gittools/actions/gitversion/setup@v0.9.6
+        with:
+          includePrerelease: false
 
       - name: Set project version
         run: |
