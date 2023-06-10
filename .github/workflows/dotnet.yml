@@ -34,8 +34,7 @@ jobs:
       - name: Get GitVersion information
         id: gitversion
         run: |
-          gitversion_path=$(dotnet tool run gitversion --tool-path .)
-          ${gitversion_path}/gitversion /output json > gitversion.json
+          npx --no-install gitversion /output json > gitversion.json
           version=$(jq -r '.FullSemVer' gitversion.json)
           echo "::set-output name=version::${version}"
 
