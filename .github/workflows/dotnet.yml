@@ -63,7 +63,7 @@ jobs:
         run: dotnet restore
 
       - name: Publish
-        run: dotnet publish --configuration Release --no-build --output ./publish ./src/Presentations/Samples.ModularMonolith.Presentation.BootstrapperApi/Samples.ModularMonolith.Presentation.BootstrapperApi.csproj
+        run: dotnet publish --configuration Release --output ./publish ./src/Presentations/Samples.ModularMonolith.Presentation.BootstrapperApi/Samples.ModularMonolith.Presentation.BootstrapperApi.csproj
 
       - name: Zip source code
         run: zip -r sample.modularmonolith.source-code.zip ./src
